@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { TaskComponent } from '../shared/components/task/task.component';
@@ -12,16 +12,20 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   fb = inject(FormBuilder);
 
   title = 'todo-app';
   tasks: Itask[] = [];
-  curr!: Itask | undefined;
 
   form = this.fb.nonNullable.group({
     todoInput: '',
   });
+
+  ngOnInit(): void {
+    const tasks: string | null = localStorage.getItem('tasks');
+    this.tasks = tasks ? JSON.parse(tasks) : [];
+  }
 
   addTodo(): void {
     const task = this.form.getRawValue().todoInput;
@@ -29,23 +33,30 @@ export class AppComponent {
 
     if (!task) return;
 
+    this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
     this.tasks.push({ _id: _id, isChecked: false, value: task });
+
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
     this.form.reset();
-    console.log(this.tasks);
   }
 
-  editTask(id: string, text: string) {}
+  editTask(id: string, text: string): void {}
 
-  deleteTask(id: string) {
-    this.tasks.forEach((t, i, arr) => {
-      if (t._id === id) arr.splice(i, 1);
-    });
-  }
-  checkedTask(id: string) {
-    if (!this.tasks) {
-      return;
-    } else {
-      this.curr = this.tasks.find((t) => t._id === id);
+  deleteTask(id: string): void {
+    if (!this.tasks) return;
+    const index = this.tasks.findIndex((t) => t._id === id);
+
+    if (index !== -1) {
+      this.tasks.splice(index, 1);
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
     }
+  }
+
+  checkedTask(id: string): void {
+    if (!this.tasks) return;
+    this.tasks.forEach((t) => {
+      if (t._id === id) t.isChecked = !t.isChecked;
+    });
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 }
