@@ -17,6 +17,7 @@ export class AppComponent {
 
   title = 'todo-app';
   tasks: Itask[] = [];
+  curr!: Itask | undefined;
 
   form = this.fb.nonNullable.group({
     todoInput: '',
@@ -31,5 +32,20 @@ export class AppComponent {
     this.tasks.push({ _id: _id, isChecked: false, value: task });
     this.form.reset();
     console.log(this.tasks);
+  }
+
+  editTask(id: string, text: string) {}
+
+  deleteTask(id: string) {
+    this.tasks.forEach((t, i, arr) => {
+      if (t._id === id) arr.splice(i, 1);
+    });
+  }
+  checkedTask(id: string) {
+    if (!this.tasks) {
+      return;
+    } else {
+      this.curr = this.tasks.find((t) => t._id === id);
+    }
   }
 }

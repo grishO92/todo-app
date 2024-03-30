@@ -1,4 +1,17 @@
 <label class="task-wrapper">
-  <input type="checkbox" [checked]="isChecked" />
-  <p class="task-title">{{ taskValue }}</p>
+  <input
+    class="checkbox"
+    type="checkbox"
+    [(ngModel)]="todo.isChecked"
+    (click)="checkTask(todo.isChecked)"
+    [disabled]="todo.isChecked"
+  />
+  <p
+    [style.textDecoration]="todo.isChecked ? 'line-through' : 'none'"
+    class="task-title"
+  >
+    {{ todo.value }}
+  </p>
+  <button (click)="editTask()">Edit</button>
+  <button class="del-btn" (click)="deleteTask()">Delete</button>
 </label>
