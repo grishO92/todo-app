@@ -12,8 +12,11 @@ import { Itask } from './types/task.interface';
 export class TaskComponent {
   @Input() todo!: Itask;
   @Output() checked = new EventEmitter<boolean>();
-  @Output() edit = new EventEmitter<void>();
+  @Output() edit = new EventEmitter<Itask>();
   @Output() delete = new EventEmitter<void>();
+  editMode: boolean = false;
+
+  editedValue!: string;
 
   checkTask(checked: boolean): void {
     this.checked.emit(checked);
@@ -24,6 +27,12 @@ export class TaskComponent {
   }
 
   editTask(): void {
-    this.edit.emit();
+    if (this.editMode) {
+      this.todo.value = this.editedValue;
+      this.edit.emit(this.todo);
+    } else {
+      this.editedValue = this.todo.value;
+    }
+    this.editMode = !this.editMode;
   }
 }

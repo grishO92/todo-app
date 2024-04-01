@@ -16,7 +16,7 @@
     [todo]="task"
     (checked)="checkedTask(task._id)"
     (delete)="deleteTask(task._id)"
-    (edit)="editTask(task._id, task.value)"
+    (edit)="editTask($event)"
   />
   } @empty {
   <p>no todos</p>

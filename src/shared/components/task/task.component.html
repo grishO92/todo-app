@@ -1,11 +1,17 @@
-<label class="task-wrapper">
+<section class="task-wrapper">
   <input
     class="checkbox"
     type="checkbox"
+    name="task"
     [(ngModel)]="todo.isChecked"
     (click)="checkTask(todo.isChecked)"
-    [disabled]="todo.isChecked"
   />
+
+  @if(editMode){
+  <input type="text" name="task" [(ngModel)]="editedValue" />
+  <button (click)="editTask()">Save</button>
+  <button (click)="editMode = false">Cancel</button>
+  } @else {
   <p
     [style.textDecoration]="todo.isChecked ? 'line-through' : 'none'"
     class="task-title"
@@ -14,4 +20,5 @@
   </p>
   <button (click)="editTask()">Edit</button>
   <button class="del-btn" (click)="deleteTask()">Delete</button>
-</label>
+  }
+</section>
