@@ -3,16 +3,71 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1rem;
+  gap: 12px;
   width: auto;
-  height: 80vh;
-  margin: 10vh;
-  padding: 50px;
-  background-color: rgb(70, 185, 206);
-  border-radius: 8%;
+  height: 100vh;
+
+  padding: 12px 0;
+  background-color: rgb(21, 50, 145);
 
   .todo-app-header {
-    font-size: 45px;
+    font-size: 48px;
     color: white;
+  }
+
+  .todo-input {
+    display: flex;
+    gap: 12px;
+
+    .input-field {
+      font-size: 28px;
+      outline: none;
+      border: none;
+      padding: 12px;
+      color: rgb(0, 27, 116);
+      border-radius: 12px;
+    }
+    .todo-btn {
+      cursor: pointer;
+      text-align: center;
+      font-size: 28px;
+      padding: 12px;
+
+      border-radius: 12px;
+      border: none;
+      color: rgb(0, 27, 116);
+      background-color: rgb(237, 241, 0);
+
+      &:hover {
+        background-color: rgb(197, 201, 0);
+      }
+    }
+  }
+
+  .tasks-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: rgb(80, 99, 161);
+    gap: 12px;
+    height: fit-content;
+    overflow: auto;
+    border-radius: 12px;
+    padding: 12px;
+
+    &:nth-child(0) {
+      justify-content: center;
+    }
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .no-todos {
+      color: white;
+      font-size: 32px;
+      padding: 44px;
+    }
   }
 }

@@ -5,21 +5,24 @@
       <input
         name="input"
         type="text"
+        class="input-field"
         placeholder="write a todo"
         formControlName="todoInput"
       />
-      <input type="submit" value="add Todo" />
+      <input type="submit" class="todo-btn" value="add Todo" />
     </label>
   </form>
-  @for(task of tasks; track task._id){
-  <task
-    [task]="task"
-    (checked)="checkedTask(task._id)"
-    (delete)="deleteTask(task._id)"
-    (edit)="editTask($event)"
-  />
-  } @empty {
-  <p>no todos</p>
-  }
+  <section class="tasks-wrapper">
+    @for(task of tasks; track task._id;){
+    <task
+      [task]="task"
+      (checked)="checkedTask(task._id)"
+      (delete)="deleteTask(task._id)"
+      (edit)="editTask($event)"
+    />
+    } @empty {
+    <p class="no-todos">no todos</p>
+    }
+  </section>
 </section>
 <router-outlet></router-outlet>
