@@ -13,15 +13,18 @@
     </label>
   </form>
   <section class="tasks-wrapper">
-    @for(task of tasks; track task._id;){
+    @for(task of tasks; track task._id;) {
+
     <task
+      [@addRemoveAnimation]
+      class="task-item"
       [task]="task"
       (checked)="checkedTask(task._id)"
       (delete)="deleteTask(task._id)"
       (edit)="editTask($event)"
     />
     } @empty {
-    <p class="no-todos">no todos</p>
+    <p [@addRemoveAnimation] class="no-todos">no todos</p>
     }
   </section>
 </section>

@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { TaskComponent } from '../shared/components/task/task.component';
 import { Itask } from '../shared/components/task/types/task.interface';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { trigger, transition, animate, style } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,23 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
   imports: [CommonModule, RouterOutlet, TaskComponent, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  animations: [
+    trigger('addRemoveAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-300%)' }),
+        animate(
+          '300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          style({ opacity: 0, transform: 'translateY(-100%)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AppComponent implements OnInit {
   fb = inject(FormBuilder);
@@ -19,6 +37,7 @@ export class AppComponent implements OnInit {
   tasks: Itask[] = [];
   newValue!: string;
   isEditMode!: boolean;
+  isNewTask: boolean = true;
 
   form = this.fb.nonNullable.group({
     todoInput: '',
@@ -73,6 +92,7 @@ export class AppComponent implements OnInit {
     const index = this.getTaskIndex(id);
     if (index !== -1) {
       this.tasks.splice(index, 1);
+      this.isNewTask = false;
       this.saveTasksToLocalStorage();
     }
   }

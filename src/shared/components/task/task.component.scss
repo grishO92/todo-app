@@ -22,6 +22,7 @@ $checkbox-border-radius: 4px;
     border-radius: 12;
     outline: none;
     cursor: pointer;
+    transition-duration: 300ms;
     position: relative;
     &::before {
       content: "";
@@ -35,6 +36,7 @@ $checkbox-border-radius: 4px;
       transform: translate(-50%, -50%);
       background-color: white;
       border: $checkbox-border;
+      transition-duration: 300ms;
       border-radius: $checkbox-border-radius - 1px;
     }
     &:checked::before {
@@ -43,10 +45,12 @@ $checkbox-border-radius: 4px;
       color: #007bff;
       text-align: center;
       line-height: $checkbox-size - 4px;
+      transition-duration: 300ms;
       border-radius: 12;
     }
     &:hover::before {
       border-radius: 12;
+      transition-duration: 300ms;
       background-color: #f0f0f0;
     }
   }
@@ -58,6 +62,7 @@ $checkbox-border-radius: 4px;
     margin: 0;
     width: 220px;
     color: rgb(0, 27, 116);
+    transition-duration: 300ms;
     border-radius: 12px;
   }
 
@@ -67,6 +72,7 @@ $checkbox-border-radius: 4px;
     overflow: hidden;
     text-overflow: ellipsis;
     color: rgb(0, 27, 116);
+    transition-duration: 300ms;
     max-width: 220px;
   }
 
@@ -83,9 +89,15 @@ $checkbox-border-radius: 4px;
     border: none;
     background-color: rgb(0, 27, 116);
     color: white;
+    transition-duration: 300ms;
 
     &:hover {
+      transition-duration: 300ms;
       background-color: rgb(1, 19, 78);
+    }
+    &:focus {
+      scale: 0.98;
+      transition-duration: 300ms;
     }
   }
 }
