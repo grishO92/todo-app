@@ -15,4 +15,4 @@ A basic Todo app.
 
 ## Demo
 
-Coming soon... 😀
+[Link](https://todo-app-chi-tan.vercel.app/) 😀
