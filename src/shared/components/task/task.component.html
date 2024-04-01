@@ -3,20 +3,20 @@
     class="checkbox"
     type="checkbox"
     name="task"
-    [(ngModel)]="todo.isChecked"
-    (click)="checkTask(todo.isChecked)"
+    [(ngModel)]="task.isChecked"
+    (click)="checkTask(task.isChecked)"
   />
 
   @if(editMode){
-  <input type="text" name="task" [(ngModel)]="editedValue" />
+  <input type="text" name="task" [(ngModel)]="editedTaskValue" />
   <button (click)="editTask()">Save</button>
   <button (click)="editMode = false">Cancel</button>
   } @else {
   <p
-    [style.textDecoration]="todo.isChecked ? 'line-through' : 'none'"
+    [style.textDecoration]="task.isChecked ? 'line-through' : 'none'"
     class="task-title"
   >
-    {{ todo.value }}
+    {{ task.value }}
   </p>
   <button (click)="editTask()">Edit</button>
   <button class="del-btn" (click)="deleteTask()">Delete</button>

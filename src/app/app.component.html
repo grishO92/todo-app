@@ -13,7 +13,7 @@
   </form>
   @for(task of tasks; track task._id){
   <task
-    [todo]="task"
+    [task]="task"
     (checked)="checkedTask(task._id)"
     (delete)="deleteTask(task._id)"
     (edit)="editTask($event)"

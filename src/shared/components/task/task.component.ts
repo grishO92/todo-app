@@ -10,13 +10,13 @@ import { Itask } from './types/task.interface';
   imports: [FormsModule],
 })
 export class TaskComponent {
-  @Input() todo!: Itask;
+  @Input() task!: Itask;
   @Output() checked = new EventEmitter<boolean>();
   @Output() edit = new EventEmitter<Itask>();
   @Output() delete = new EventEmitter<void>();
-  editMode: boolean = false;
 
-  editedValue!: string;
+  editMode: boolean = false;
+  editedTaskValue!: string;
 
   checkTask(checked: boolean): void {
     this.checked.emit(checked);
@@ -28,10 +28,10 @@ export class TaskComponent {
 
   editTask(): void {
     if (this.editMode) {
-      this.todo.value = this.editedValue;
-      this.edit.emit(this.todo);
+      this.task.value = this.editedTaskValue;
+      this.edit.emit(this.task);
     } else {
-      this.editedValue = this.todo.value;
+      this.editedTaskValue = this.task.value;
     }
     this.editMode = !this.editMode;
   }
