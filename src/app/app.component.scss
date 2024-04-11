@@ -54,10 +54,11 @@
     align-items: center;
 
     gap: 12px;
-    min-height: 100vh;
-    overflow: auto;
+    min-height: max-content;
+    overflow: scroll;
     border-radius: 12px;
     padding: 12px;
+    margin-bottom: 20px;
 
     &::-webkit-scrollbar {
       width: 0;
