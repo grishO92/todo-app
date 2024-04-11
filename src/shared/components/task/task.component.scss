@@ -105,7 +105,7 @@ $checkbox-border-radius: 4px;
 @media all and (max-width: 720px) {
   .main-wrapper {
     .task-item {
-      width: 100%;
+      width: fit-content;
       padding: 12px;
       font-size: 18px;
       border-radius: 8px;
