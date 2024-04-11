@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { TaskComponent } from '../shared/components/task/task.component';
@@ -34,27 +34,24 @@ export class AppComponent implements OnInit {
   fb = inject(FormBuilder);
 
   title = 'todo-app';
-  tasks: Itask[] = [];
-  newValue!: string;
-  isEditMode!: boolean;
-  isNewTask: boolean = true;
+  tasks = signal<Itask[]>([]);
 
   form = this.fb.nonNullable.group({
     todoInput: '',
   });
 
   saveTasksToLocalStorage(): void {
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    localStorage.setItem('tasks', JSON.stringify(this.tasks()));
   }
 
   loadTasksFromLocalStorage(): void {
     const tasks: string | null = localStorage.getItem('tasks');
-    this.tasks = tasks ? JSON.parse(tasks) : [];
+    this.tasks.update((taskss) => (taskss = tasks ? JSON.parse(tasks) : []));
   }
 
   getTaskIndex(id: string): number {
     let index!: number;
-    this.tasks.find((t: Itask, i: number) => {
+    this.tasks().find((t: Itask, i: number) => {
       if (t._id === id) index = i;
     });
     return index;
@@ -70,8 +67,13 @@ export class AppComponent implements OnInit {
 
     if (!task) return;
 
-    this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-    this.tasks.push({ _id: _id, isChecked: false, value: task });
+    this.tasks.update(
+      (tasks) => (tasks = JSON.parse(localStorage.getItem('tasks') || '[]'))
+    );
+    this.tasks.update((tasks) => [
+      ...tasks,
+      { _id: _id, isChecked: false, value: task },
+    ]);
 
     this.saveTasksToLocalStorage();
     this.form.reset();
@@ -81,28 +83,27 @@ export class AppComponent implements OnInit {
     const index = this.getTaskIndex(editedTask._id);
 
     if (index !== -1) {
-      this.tasks[index].value = editedTask.value;
+      this.tasks()[index].value = editedTask.value;
       this.saveTasksToLocalStorage();
     }
   }
 
   deleteTask(id: string): void {
-    if (!this.tasks) return;
+    if (!this.tasks()) return;
 
     const index = this.getTaskIndex(id);
     if (index !== -1) {
-      this.tasks.splice(index, 1);
-      this.isNewTask = false;
+      this.tasks.update((tasks) => tasks.filter((v) => v._id !== id));
       this.saveTasksToLocalStorage();
     }
   }
 
   checkedTask(id: string): void {
-    if (!this.tasks) return;
+    if (!this.tasks()) return;
 
     const index = this.getTaskIndex(id);
 
-    this.tasks[index].isChecked = !this.tasks[index].isChecked;
+    this.tasks()[index].isChecked = !this.tasks()[index].isChecked;
     this.saveTasksToLocalStorage();
   }
 }

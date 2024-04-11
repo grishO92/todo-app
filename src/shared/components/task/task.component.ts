@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Itask } from './types/task.interface';
 
@@ -10,12 +10,12 @@ import { Itask } from './types/task.interface';
   imports: [FormsModule],
 })
 export class TaskComponent {
-  @Input() task!: Itask;
-  @Output() checked = new EventEmitter<boolean>();
-  @Output() edit = new EventEmitter<Itask>();
-  @Output() delete = new EventEmitter<void>();
+  task = input<Itask>();
+  checked = output<boolean>();
+  edit = output<Itask>();
+  delete = output<void>();
 
-  editMode: boolean = false;
+  editMode = signal(false);
   editedTaskValue!: string;
 
   checkTask(checked: boolean): void {
@@ -27,12 +27,13 @@ export class TaskComponent {
   }
 
   editTask(): void {
-    if (this.editMode) {
-      this.task.value = this.editedTaskValue;
-      this.edit.emit(this.task);
+    if (this.editMode()) {
+      this.task()!.value = this.editedTaskValue;
+      this.edit.emit(this.task()!);
     } else {
-      this.editedTaskValue = this.task.value;
+      this.editedTaskValue = this.task()!.value;
     }
-    this.editMode = !this.editMode;
+
+    this.editMode.update((mode) => (mode ? false : true));
   }
 }
