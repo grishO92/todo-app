@@ -101,3 +101,105 @@ $checkbox-border-radius: 4px;
     }
   }
 }
+
+@media all and (max-width: 576px) {
+  .task-wrapper {
+    display: flex;
+    gap: 12px;
+    padding: 12px 12px 12px 24px;
+    background-color: rgb(237, 241, 0);
+    max-width: auto;
+    align-items: center;
+    font-size: 20px;
+    border-radius: 12px;
+
+    .checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12;
+      outline: none;
+      cursor: pointer;
+      transition-duration: 300ms;
+      position: relative;
+      &::before {
+        content: "";
+        display: block;
+        width: $checkbox-size - 4px;
+        height: $checkbox-size - 4px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 12;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: $checkbox-border;
+        transition-duration: 300ms;
+        border-radius: $checkbox-border-radius - 1px;
+      }
+      &:checked::before {
+        content: "☑️";
+        font-size: 18px;
+        color: #007bff;
+        text-align: center;
+        line-height: $checkbox-size - 4px;
+        transition-duration: 300ms;
+        border-radius: 12;
+      }
+      &:hover::before {
+        border-radius: 12;
+        transition-duration: 300ms;
+        background-color: #f0f0f0;
+      }
+    }
+    .edit-input {
+      font-size: 20px;
+      outline: none;
+      border: none;
+      padding: 8px;
+      margin: 0;
+      width: 220px;
+      color: rgb(0, 27, 116);
+      transition-duration: 300ms;
+      border-radius: 12px;
+    }
+
+    .task-title {
+      padding: 12px;
+      min-width: 124px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: rgb(0, 27, 116);
+      transition-duration: 300ms;
+      max-width: max-content;
+    }
+
+    .del-btn,
+    .edit-btn,
+    .cancel-btn,
+    .save-btn {
+      cursor: pointer;
+      text-align: center;
+      font-size: 20px;
+      padding: 12px;
+      width: 80px;
+      border-radius: 12px;
+      border: none;
+      background-color: rgb(0, 27, 116);
+      color: white;
+      transition-duration: 300ms;
+
+      &:hover {
+        transition-duration: 300ms;
+        background-color: rgb(1, 19, 78);
+      }
+      &:focus {
+        scale: 0.98;
+        transition-duration: 300ms;
+      }
+    }
+  }
+}
