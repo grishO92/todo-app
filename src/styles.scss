@@ -8,11 +8,10 @@
 
 html {
   height: -webkit-fill-available;
-  overflow: hidden;
 }
 
 body {
-  overflow: scroll;
+  overflow: hidden;
   height: -webkit-fill-available;
 
   &::-webkit-scrollbar {
